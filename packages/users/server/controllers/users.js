@@ -30,9 +30,7 @@ exports.creatures = function(req, res) {
 				}
 				);
 				user.save();
-				console.log('adding creature');
 			}
-			console.log('getting creatures');
 			res.send(user.creatures);
 		});
 	}

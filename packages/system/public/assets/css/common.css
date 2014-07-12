@@ -46,3 +46,15 @@ footer p {
 .ng-valid.ng-dirty{
     border-color:#78FA89;
 }
+.battle-start {
+	background: #aaaadd;
+	min-height: 150px;
+}
+.battle-start .user {
+	background: black;
+	color: white;
+	cursor: pointer;
+}
+.battle-start .user:hover {
+	background: #333;
+}
