@@ -154,9 +154,8 @@ angular.module('mean.system')
 		socket.emit('gameConnection', dataReady);
 	};
 
-	socket.on('gameConnection' function (data) {
+	socket.on('gameConnection', function (data) {
 		console.log(data);
 	});
-	sendData();
 
 }]);
