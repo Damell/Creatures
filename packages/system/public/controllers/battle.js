@@ -36,21 +36,31 @@ angular.module('mean.system')
     var drag = d3.behavior.drag()
       .origin(function(d) { return d.position; })
       .on('dragstart', function( d ) {
-        // Stash away drag start location
-        d._dragStart = {
-          x: d3.event.sourceEvent.x,
-          y: d3.event.sourceEvent.y
-        };
+        // Stash away drag points
+        d._dragPoints = [];
+      })
+      .on('drag', function( d ) {
+        // Stash
+        var point = {
+          x: d3.event.x,
+          y: d3.event.y
+        }; 
+        d._dragPoints.push( point );
       })
       .on('dragend', function( d ) {
+        var start = d._dragPoints[0];
+        var end = d._dragPoints[d._dragPoints.length - 1];
+        console.log( d._dragPoints );
+        console.log( start );
+        console.log( end );
         var dragDirection = {
-          x: d3.event.sourceEvent.x - d._dragStart.x,
-          y: d3.event.sourceEvent.y - d._dragStart.y
+          x: end.x - start.x,
+          y: end.y - start.y
         };
         //console.log( 'Dragged in direction:' );
         //console.log( dragDirection );
         var shot = {
-          position: d._dragStart,
+          position: start,
           direction: dragDirection,
           player: me
         };
