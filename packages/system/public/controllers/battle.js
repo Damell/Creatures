@@ -18,7 +18,7 @@ angular.module('mean.system')
     var height = 600;
     var creatureSize = 50; // How big creatures should be
     var shotSize = 10; // How big shots should be
-    var arena = d3.select('body').append('svg')
+    var arena = d3.select('#arena').append('svg')
       .attr('width', width)
       .attr('height', height)
       .style('fill', '#000000')
@@ -44,7 +44,7 @@ angular.module('mean.system')
         var point = {
           x: d3.event.x,
           y: d3.event.y
-        }; 
+        };
         d._dragPoints.push( point );
       })
       .on('dragend', function( d ) {
@@ -85,7 +85,7 @@ angular.module('mean.system')
         .enter().append( 'circle' )
           .classed('me', true)
           .call( positionCreature );
-      
+
       // Add creatures for player two (assuming it's the opponent)
       arena.selectAll( 'circle.opponent' )
         .data( opponent.creatures ) // Bind creatures data set to selection
@@ -125,7 +125,7 @@ angular.module('mean.system')
           .each( 'end', function( d, i ) {
             // Remove shot at end of animation
             gameState.shots.splice( i, 1 );
-            
+
             // Check if we hit something (pretty terrible hit-testing, should use line/circle intersection)
             for ( var c in opponent.creatures ) {
               var creature = opponent.creatures[c];
