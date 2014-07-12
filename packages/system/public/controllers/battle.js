@@ -8,11 +8,8 @@ angular.module('mean.system')
 
     // Game state is contiained in this structure, which is synchronized between devices
     var gameState,
-        me,
-        opponent,
         fire,
         updateArena;
-
     // Create SVG to hold game arena
     var width = 800;
     var height = 600;
@@ -23,6 +20,13 @@ angular.module('mean.system')
       .attr('height', height)
       .style('fill', '#000000')
       .append('g');
+
+    var init = function() {
+      // TODO do not hardcode
+      //if ( !shift ) {
+        //arena.attr( 'transform', 'translate(0, ' + height / 2 + ')' );
+      //}
+    };
 
     // Helper functions and behaviours for creatures
     var positionCreature = function( creature ) {
@@ -57,12 +61,12 @@ angular.module('mean.system')
           x: end.x - start.x,
           y: end.y - start.y
         };
-        //console.log( 'Dragged in direction:' );
-        //console.log( dragDirection );
+        console.log( 'Dragged in direction:' );
+        console.log( dragDirection );
         var shot = {
           position: start,
           direction: dragDirection,
-          player: me
+          creature: d
         };
 
         fire( shot );
@@ -70,7 +74,7 @@ angular.module('mean.system')
 
     fire = function( shot ) {
       // Normalize direction
-      var factor = shot.direction.y > 0 ? ( height - shot.position.y - 50 ) / shot.direction.y : ( shot.position.y -50 ) / shot.direction.y;
+      var factor = shot.direction.y > 0 ? ( height - shot.position.y - 50 ) / shot.direction.y : ( 50 - shot.position.y ) / shot.direction.y;
       shot.direction.x *= factor;
       shot.direction.y *= factor;
       gameState.shots.push( shot );
@@ -80,22 +84,15 @@ angular.module('mean.system')
     // Rendering, binds actions to SVG elements using d3
     updateArena = function() {
       // Add creatures for player one (assuming it's `me`)
-      var creatures = arena.selectAll( 'circle.me' )
-        .data( me.creatures ) // Bind creatures data set to selection
+      var creatures = arena.selectAll( 'circle.creature' )
+        .data( gameState.creatures ) // Bind creatures data set to selection
         .enter().append( 'circle' )
-          .classed('me', true)
-          .call( positionCreature );
-
-      // Add creatures for player two (assuming it's the opponent)
-      arena.selectAll( 'circle.opponent' )
-        .data( opponent.creatures ) // Bind creatures data set to selection
-        .enter().append( 'circle' )
-          .classed('opponent', true)
+          .classed('creature', true)
           .call( positionCreature );
 
       // Add health labels
       var health = arena.selectAll( 'text.health' )
-        .data( me.creatures.concat( opponent.creatures ) );
+        .data( gameState.creatures );
 
       health
         .enter().append( 'text' )
@@ -127,11 +124,15 @@ angular.module('mean.system')
             gameState.shots.splice( i, 1 );
 
             // Check if we hit something (pretty terrible hit-testing, should use line/circle intersection)
-            for ( var c in opponent.creatures ) {
-              var creature = opponent.creatures[c];
-              if ( Math.abs( d.position.x + d.direction.x - creature.position.x ) < 1.1 * creatureSize ) {
-                creature.health -= 10;
-                updateArena();
+            for ( var c in gameState.creatures ) {
+              if( gameState.creatures.hasOwnProperty( c ) ) {
+                var creature = gameState.creatures[c];
+                if ( Math.abs( d.position.x + d.direction.x - creature.position.x ) < 1.1 * creatureSize &&
+                     Math.abs( d.position.y + d.direction.y - creature.position.y ) < 2.0 * creatureSize) {
+                  creature.health -= 10;
+                  updateArena();
+                  break;
+                }
               }
             }
           })
@@ -143,9 +144,7 @@ angular.module('mean.system')
         return console.warn(error);
       }
       gameState = json;
-      // TODO do not hardcode
-      me = gameState.players[0];
-      opponent = gameState.players[1];
+      init();
       updateArena();
     });
 
