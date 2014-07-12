@@ -153,17 +153,6 @@ describe('<Unit Test>', function() {
                 });
             });
 
-            it('should show an error when try to save without name', function(done) {
-                
-                var _user = new User(user1);
-                _user.name = '';
-
-                return _user.save(function(err) {
-                    should.exist(err);
-                    done();
-                });
-            });
-
             it('should show an error when try to save without username', function(done) {
                 
                 var _user = new User(user1);

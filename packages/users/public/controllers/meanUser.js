@@ -8,7 +8,7 @@ angular.module('mean.users')
             // Register the login() function
             $scope.login = function() {
                 $http.post('/login', {
-                    email: $scope.user.email,
+                    username: $scope.user.username,
                     password: $scope.user.password
                 })
                 .success(function(response) {
