@@ -5,8 +5,9 @@ angular.module('mean.system')
     $scope.global = Global;
 }])
 .controller('CreatureController', ['$scope', 'Global', 'socket', function ($scope, Global, socket) {
-	socket.on('hello', function () {
+	socket.on('hello', function (data) {
 		console.log('hello');
+		console.log(data);
 	});
 	socket.on('broad', function () {
 		console.log('broadcast');

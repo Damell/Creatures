@@ -10,6 +10,7 @@ module.exports = function(System, app, auth, database) {
 		// emit data to the clients
 		socket.emit('hello', { hello: 'world' });
 
+		socket.broadcast('broad', {test: 'test'});
 		// event listeners
 		socket.on('my other event', function (data) {
 			// call your controller function here
