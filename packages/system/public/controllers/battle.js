@@ -79,6 +79,7 @@ angular.module('mean.system')
       shot.direction.y *= factor;
       gameState.shots.push( shot );
       updateArena();
+	  $scope.sendData(gameState);
     };
 
     // Rendering, binds actions to SVG elements using d3
@@ -155,7 +156,8 @@ angular.module('mean.system')
 	};
 
 	socket.on('gameConnection', function (data) {
-		console.log(data);
+		gameState = data.data;
+		updateArena();
 	});
 
 }]);
