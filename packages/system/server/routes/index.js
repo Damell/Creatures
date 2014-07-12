@@ -10,6 +10,9 @@ module.exports = function(System, app, auth, database) {
 		// emit data to the clients
 		socket.emit('hello', { hello: 'world' });
 		app.io.emit('hello', { hello: 'world' });
+		
+		socket.join('battle1');
+		app.io.in('battle1').emit('join', { data: 'I joined' });
 
 		// event listeners
 		socket.on('my other event', function (data) {

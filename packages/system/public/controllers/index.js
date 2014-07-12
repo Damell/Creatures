@@ -9,8 +9,8 @@ angular.module('mean.system')
 		console.log('hello');
 		console.log(data);
 	});
-	socket.on('broad', function () {
-		console.log('broadcast');
+	socket.on('join', function () {
+		console.log('join');
 	});
     $scope.global = Global;
 }]);
