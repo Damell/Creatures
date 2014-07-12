@@ -31,9 +31,15 @@ angular.module('mean.system')
     // Helper functions and behaviours for creatures
     var positionCreature = function( creature ) {
       creature
-        .attr('cx', function(d) { return d.position.x; })
-        .attr('cy', function(d) { return d.position.y; })
-        .attr('r', creatureSize);
+        .attr( 'xlink:href', function(d) {
+          var uniqueName = d.player + d.id;
+          // TODO Massive security hole!!!!!
+          return 'http://robohash.org/' + uniqueName;
+        } ) 
+        .attr('x', function(d) { return d.position.x - 64; })
+        .attr('y', function(d) { return d.position.y - 64; })
+        .attr('width', 128)
+        .attr('height', 128);
     };
 
     // Add behaviour for dragging, to shoot
@@ -85,9 +91,9 @@ angular.module('mean.system')
     // Rendering, binds actions to SVG elements using d3
     updateArena = function() {
       // Add creatures for player one (assuming it's `me`)
-      var creatures = arena.selectAll( 'circle.creature' )
+      var creatures = arena.selectAll( 'image.creature' )
         .data( gameState.creatures ) // Bind creatures data set to selection
-        .enter().append( 'circle' )
+        .enter().append( 'image' )
           .classed('creature', true)
           .call( positionCreature );
 
@@ -98,9 +104,9 @@ angular.module('mean.system')
       health
         .enter().append( 'text' )
           .classed('health', true)
-          .style('fill', '#ff7700')
-          .attr('x', function(d) { return d.position.x; })
-          .attr('y', function(d) { return d.position.y; });
+          .style('fill', '#ff4100')
+          .attr('x', function(d) { return d.position.x + 30; })
+          .attr('y', function(d) { return d.position.y - 20; });
 
       health
         .text( function( d ) { return d.health; } );
@@ -151,8 +157,10 @@ angular.module('mean.system')
 
 	$scope.sendData = function (data) {
 		var dataReady = window.gameConnection;
-		dataReady.data = data;
-		socket.emit('gameConnection', dataReady);
+    if ( dataReady ) {
+      dataReady.data = data;
+      socket.emit('gameConnection', dataReady);
+    }
 	};
 
 	socket.on('gameConnection', function (data) {
