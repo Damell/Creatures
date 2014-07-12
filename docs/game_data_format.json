@@ -1,0 +1,42 @@
+{
+  "players": [
+    {
+      "id": "foo",
+      "creatures": [
+        {
+          "id": "creature_1",
+          "health": 100,
+          "attack": 7,
+          "defense": 4,
+          "type": "fire"
+        },
+        {
+          "id": "creature_2",
+          "health": 50,
+          "attack": 3,
+          "defense": 1,
+          "type": "fire"
+        }
+      ]
+    },
+    {
+      "id": "bar",
+      "creatures": [
+        {
+          "id": "creature_1",
+          "health": 100,
+          "attack": 7,
+          "defense": 4,
+          "type": "fire"
+        },
+        {
+          "id": "creature_2",
+          "health": 50,
+          "attack": 3,
+          "defense": 1,
+          "type": "fire"
+        }
+      ]
+    }
+  ]
+}
