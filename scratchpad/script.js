@@ -14,6 +14,7 @@ var height = 600;
 var arena = d3.select('body').append('svg')
   .attr('width', width)
   .attr('height', height)
+  .style('fill', '#ffffff')
   .append('g');
 
 // Helper functions and behaviours for creatures
@@ -21,7 +22,7 @@ var positionCreature = function( creature ) {
   creature
     .attr('cx', function(d) { return d.position.x; })
     .attr('cy', function(d) { return d.position.y; })
-    .attr('r', function(d) { return d.health; });
+    .attr('r', 50);
 };
 
 // Add behaviour for dragging, to shoot
@@ -74,6 +75,21 @@ var render = function() {
     .enter().append( 'circle' )
       .classed('opponent', true)
       .call( positionCreature );
+
+  // Add health labels
+  var health = arena.selectAll( 'text.health' )
+    .data( me.creatures.concat( opponent.creatures ) );
+
+  health
+    .enter().append( 'text' )
+      .classed('health', true)
+      .attr("x", function(d) { return d.position.x - 10; })
+      .attr("y", function(d) {
+        return d.position.y + 70;
+      });
+
+  health
+    .text( function( d ) { return d.health; } );
 
   // Bind drag behaviour to creatures
   creatures.call( drag );
