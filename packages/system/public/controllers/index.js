@@ -9,8 +9,11 @@ angular.module('mean.system')
 	$scope.battleStartUsers = [];
 	var username = window.user.username;
 
-	Game.getCreatures().success(function (data) { 
-		console.log(data);
+	Game.get().success(function (data) { 
+		data.food = 5;
+		Game.update(data).success(function (data) { 
+			console.log(data);
+		});
 	});
 
 	/**

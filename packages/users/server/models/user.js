@@ -43,6 +43,10 @@ var UserSchema = new Schema({
         unique: true,
         required: true
     },
+	food: {
+		type: Number,
+		default: 0
+	},
 	creatures: [{
 		creature_id: {
 			type: String,

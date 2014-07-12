@@ -54,6 +54,7 @@ footer p {
 	background: black;
 	color: white;
 	cursor: pointer;
+	padding: 6px;
 }
 .battle-start .user:hover {
 	background: #333;

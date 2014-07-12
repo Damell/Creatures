@@ -5,8 +5,11 @@ var users = require('../controllers/users');
 
 module.exports = function(MeanUser, app, auth, database, passport) {
 
-	app.route('/creatures/:user')
-		.get(users.creatures);
+	app.route('/gameData/:user')
+		.get(users.gameDataGet);
+
+	app.route('/gameData/:user')
+		.post(users.gameDataUpdate);
 
     app.route('/logout')
         .get(users.signout);

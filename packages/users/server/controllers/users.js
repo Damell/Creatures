@@ -11,7 +11,7 @@ var mongoose = require('mongoose'),
     nodemailer = require('nodemailer'),
     templates = require('../template');
 
-exports.creatures = function(req, res) {
+exports.gameDataGet = function(req, res) {
     if (req.isAuthenticated()) {
 		User.findOne({
 			username: req.user.username
@@ -20,21 +20,42 @@ exports.creatures = function(req, res) {
 			if (!user) return res.send(new Error('Failed to load User '));
 			if (user.creatures.length === 0) {
 				user.creatures.push(
-				{
-					creature_id: 'basic',
-					name: 'Creature',
-					health: 50,
-					attack: 10,
-					defense: 5,
-					creatyre_type: 'fire'
-				}
+					{
+						creature_id: 'basic',
+						name: 'Creature',
+						health: 50,
+						attack: 10,
+						defense: 5,
+						creatyre_type: 'fire'
+					}
 				);
 				user.save();
 			}
-			res.send(user.creatures);
+			var data = {
+				creatures: user.creatures,
+				food: user.food
+			};
+			res.send(data);
 		});
 	}
 };
+
+exports.gameDataUpdate = function(req, res) {
+    if (req.isAuthenticated()) {
+		User.findOne({
+			username: req.user.username
+		})
+		.exec(function(err, user) {
+			if (!user) return res.send(new Error('Failed to load User '));
+			console.log(req.body);
+			if (req.body.creatures) user.creatures = req.body.creatures;
+			if (req.body.food) user.food = req.body.food;
+			user.save();
+			res.send('OK');
+		});
+	}
+};
+
 /**
  * Auth callback
  */
@@ -89,6 +110,7 @@ exports.create = function(req, res, next) {
 
     // Hard coded for now. Will address this with the user permissions system in v0.3.5
     user.roles = ['authenticated'];
+	user.food = 12;
     user.save(function(err) {
         if (err) {
             switch (err.code) {
