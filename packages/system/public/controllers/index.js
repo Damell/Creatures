@@ -38,6 +38,7 @@ angular.module('mean.system')
 			socket.removeAllListeners();
 			data.user = username;
 			socket.emit('joinGame', data);
+			$location.url('/battle');
 		}
 	});
 
