@@ -4,10 +4,14 @@ angular.module('mean.system')
 .controller('IndexController', ['$scope', 'Global', function ($scope, Global) {
     $scope.global = Global;
 }])
-.controller('CreatureController', ['$scope', 'Global', 'socket', '$location', function ($scope, Global, socket, $location) {
+.controller('CreatureController', ['$scope', 'Global', 'Game', 'socket', '$location', function ($scope, Global, Game, socket, $location) {
     $scope.global = Global;
 	$scope.battleStartUsers = [];
 	var username = window.user.username;
+
+	Game.getCreatures().success(function (data) { 
+		console.log(data);
+	});
 
 	/**
 	 * Update users waiting for game

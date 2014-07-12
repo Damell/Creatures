@@ -46,22 +46,28 @@ var UserSchema = new Schema({
 	creatures: [{
 		creature_id: {
 			type: String,
-			unique: true
+			unique: true,
+			default: 'basic'
 		},
 		name: {
-			type: String
+			type: String,
+			default: 'Creature'
 		},
 		health: {
-			type: Number
+			type: Number,
+			default: 50
 		},
 		attack: {
-			type: Number
+			type: Number,
+			default: 10
 		},
 		defense: {
-			type: Number
+			type: Number,
+			default: 5
 		},
 		creatyre_type: {
-			type: String 
+			type: String ,
+			default: 'fire'
 		}
 	}],
     roles: {

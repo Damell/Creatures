@@ -11,6 +11,32 @@ var mongoose = require('mongoose'),
     nodemailer = require('nodemailer'),
     templates = require('../template');
 
+exports.creatures = function(req, res) {
+    if (req.isAuthenticated()) {
+		User.findOne({
+			username: req.user.username
+		})
+		.exec(function(err, user) {
+			if (!user) return res.send(new Error('Failed to load User '));
+			if (user.creatures.length === 0) {
+				user.creatures.push(
+				{
+					creature_id: 'basic',
+					name: 'Creature',
+					health: 50,
+					attack: 10,
+					defense: 5,
+					creatyre_type: 'fire'
+				}
+				);
+				user.save();
+				console.log('adding creature');
+			}
+			console.log('getting creatures');
+			res.send(user.creatures);
+		});
+	}
+};
 /**
  * Auth callback
  */
