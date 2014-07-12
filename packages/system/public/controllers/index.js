@@ -4,7 +4,7 @@ angular.module('mean.system')
 .controller('IndexController', ['$scope', 'Global', function ($scope, Global) {
     $scope.global = Global;
 }])
-.controller('CreatureController', ['$scope', 'Global', 'socket', function ($scope, Global, socket) {
+.controller('CreatureController', ['$scope', 'Global', 'socket', '$location', function ($scope, Global, socket, $location) {
     $scope.global = Global;
 	$scope.battleStartUsers = [];
 	var username = window.user.username;
@@ -35,7 +35,7 @@ angular.module('mean.system')
 	socket.on('initGame', function(data) {
 		if (data.user === username) {
 			window.gameConnection = data;
-			socket.removeremoveAllListeners();
+			socket.removeAllListeners();
 			data.user = username;
 			socket.emit('joinGame', data);
 		}
@@ -43,8 +43,8 @@ angular.module('mean.system')
 
 	socket.on('gameConnection', function(data) {
 		window.gameConnection = data;
-		socket.removeremoveAllListeners();
-		location.url('/battle');
+		socket.removeAllListeners();
+		$location.url('/battle');
 	});
 
 }]);
