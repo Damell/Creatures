@@ -1,80 +1,76 @@
 {
-  "players": [
+  "creatures": [
     {
-      "id": "foo",
-      "creatures": [
-        {
-          "id": "creature_1",
-          "health": 100,
-          "attack": 7,
-          "defense": 4,
-          "type": "fire",
-          "position": {
-            "x": 50,
-            "y": 50
-          }
-        },
-        {
-          "id": "creature_2",
-          "health": 50,
-          "attack": 3,
-          "defense": 1,
-          "type": "fire",
-          "position": {
-            "x": 400,
-            "y": 50
-          }
-        },
-        {
-          "id": "creature_3",
-          "health": 50,
-          "attack": 3,
-          "defense": 1,
-          "type": "fire",
-          "position": {
-            "x": 750,
-            "y": 50
-          }
-        }
-      ]
+      "id": "creature_1",
+      "player": "foo",
+      "health": 100,
+      "attack": 7,
+      "defense": 4,
+      "type": "fire",
+      "position": {
+        "x": 50,
+        "y": 50
+      }
     },
     {
-      "id": "bar",
-      "creatures": [
-        {
-          "id": "creature_1",
-          "health": 80,
-          "attack": 7,
-          "defense": 4,
-          "type": "fire",
-          "position": {
-            "x": 50,
-            "y": 550
-          }
-        },
-        {
-          "id": "creature_2",
-          "health": 70,
-          "attack": 3,
-          "defense": 1,
-          "type": "fire",
-          "position": {
-            "x": 400,
-            "y": 550
-          }
-        },
-        {
-          "id": "creature_3",
-          "health": 40,
-          "attack": 3,
-          "defense": 1,
-          "type": "fire",
-          "position": {
-            "x": 750,
-            "y": 550
-          }
-        }
-      ]
+      "id": "creature_2",
+      "player": "foo",
+      "health": 50,
+      "attack": 3,
+      "defense": 1,
+      "type": "fire",
+      "position": {
+        "x": 400,
+        "y": 50
+      }
+    },
+    {
+      "id": "creature_3",
+      "player": "foo",
+      "health": 50,
+      "attack": 3,
+      "defense": 1,
+      "type": "fire",
+      "position": {
+        "x": 750,
+        "y": 50
+      }
+    },
+    {
+      "id": "creature_1",
+      "player": "bar",
+      "health": 80,
+      "attack": 7,
+      "defense": 4,
+      "type": "fire",
+      "position": {
+        "x": 50,
+        "y": 550
+      }
+    },
+    {
+      "id": "creature_2",
+      "player": "bar",
+      "health": 70,
+      "attack": 3,
+        "defense": 1,
+      "type": "fire",
+      "position": {
+        "x": 400,
+        "y": 550
+      }
+    },
+    {
+      "id": "creature_3",
+      "player": "bar",
+      "health": 40,
+      "attack": 3,
+      "defense": 1,
+      "type": "fire",
+      "position": {
+        "x": 750,
+        "y": 550
+      }
     }
   ],
   "shots": []
