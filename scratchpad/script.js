@@ -39,8 +39,8 @@ var drag = d3.behavior.drag()
       x: d3.event.sourceEvent.x - d._dragStart.x,
       y: d3.event.sourceEvent.y - d._dragStart.y
     };
-    console.log( 'Dragged in direction:' );
-    console.log( dragDirection );
+    //console.log( 'Dragged in direction:' );
+    //console.log( dragDirection );
     var shot = {
       position: d._dragStart,
       direction: dragDirection,
@@ -90,7 +90,12 @@ var render = function() {
     .transition()
       .ease( 'linear' )
       .attr('cx', function(d) { return d.position.x + d.direction.x; })
-      .attr('cy', function(d) { return d.position.y + d.direction.y; });
+      .attr('cy', function(d) { return d.position.y + d.direction.y; })
+      .each( function( d, i ) {
+        // Remove shot at end of animation
+        gameState.shots.splice( i, 1 );
+      })
+      .remove();
 };
 
 d3.json('data.json', function(error, json) {
