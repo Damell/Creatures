@@ -43,6 +43,27 @@ var UserSchema = new Schema({
         unique: true,
         required: true
     },
+	creatures: [{
+		creature_id: {
+			type: String,
+			unique: true
+		},
+		name: {
+			type: String
+		},
+		health: {
+			type: Number
+		},
+		attack: {
+			type: Number
+		},
+		defense: {
+			type: Number
+		},
+		creatyre_type: {
+			type: String 
+		}
+	}],
     roles: {
         type: Array,
         default: ['authenticated']
