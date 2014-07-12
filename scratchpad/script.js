@@ -18,18 +18,37 @@ var render = function( data ) {
   };
 
   // Add creatures for player one (assuming it's `me`)
-  arena.selectAll( 'circle.me' )
-    .data( data.players[0].creatures ) // Bind creatures data set to selection
-    .enter().append( 'circle' )
-    .call( positionCreature )
-    .classed('me', true); 
-  
-  // Add creatures for player two (assuming it's the opponent)
-  arena.selectAll( 'circle.opponent' )
+  var creatures = arena.selectAll( 'circle.me' )
     .data( data.players[1].creatures ) // Bind creatures data set to selection
     .enter().append( 'circle' )
     .call( positionCreature )
-    .classed('opponent', true); 
+    .classed('me', true);
+  
+  // Add creatures for player two (assuming it's the opponent)
+  var opponents = arena.selectAll( 'circle.opponent' )
+    .data( data.players[0].creatures ) // Bind creatures data set to selection
+    .enter().append( 'circle' )
+    .call( positionCreature )
+    .classed('opponent', true);
+
+  // Add behaviour for dragging, to shoot
+  var drag = d3.behavior.drag()
+    .origin(function(d) { return d.position; })
+    .on('dragstart', function( d ) {
+      // Stash away drag start location
+      d._dragStart = d3.event.sourceEvent;
+    })
+    .on('dragend', function( d ) {
+      var dragDirection = {
+        x: d3.event.sourceEvent.x - d._dragStart.x,
+        y: d3.event.sourceEvent.y - d._dragStart.y
+      };
+      console.log( 'Dragged in direction:' );
+      console.log( dragDirection );
+    });
+
+  // Bind drag behaviour to creatures
+  creatures.call( drag );
 };
 
 d3.json('data.json', function(error, json) {
