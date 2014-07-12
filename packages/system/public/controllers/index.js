@@ -6,7 +6,4 @@ angular.module('mean.system')
 }])
 .controller('CreatureController', ['$scope', 'Global', function ($scope, Global) {
     $scope.global = Global;
-}])
-.controller('BattleController', ['$scope', 'Global', function ($scope, Global) {
-    $scope.global = Global;
 }]);
