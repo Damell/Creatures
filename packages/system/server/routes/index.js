@@ -7,12 +7,15 @@ module.exports = function(System, app, auth, database) {
 	app.route('/') .get(index.render);
 
 	app.io.on('connection', function (socket) {
-		// emit data to the clients
-		socket.emit('hello', { hello: 'world' });
-		app.io.emit('hello', { hello: 'world' });
+
+		socket.on('connect', function (data) {
+			app.io.emit('join', data);
+			app.io.emit('echo');
+		});
 		
-		socket.join('battle1');
-		app.io.in('battle1').emit('join', { data: 'I joined' });
+		app.io.on('prev_connected', function (data) {
+			app.io.emit('join', data);
+		});
 
 		// event listeners
 		socket.on('my other event', function (data) {
