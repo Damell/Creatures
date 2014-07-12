@@ -13,7 +13,7 @@ var width = 800;
 var height = 600;
 var creatureSize = 50; // How big creatures should be
 var shotSize = 10; // How big shots should be
-var arena = d3.select('body').append('svg')
+var arena = d3.select('div#arena').append('svg')
   .attr('width', width)
   .attr('height', height)
   .style('fill', '#ffffff')
