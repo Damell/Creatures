@@ -9,6 +9,7 @@ module.exports = function(System, app, auth, database) {
 	app.io.on('connection', function (socket) {
 		// emit data to the clients
 		socket.emit('hello', { hello: 'world' });
+		app.io.emit('hello', { hello: 'world' });
 
 		// event listeners
 		socket.on('my other event', function (data) {
