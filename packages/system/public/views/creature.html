@@ -4,7 +4,7 @@ CREATURE
 	<div class="header">
 		<h2>Users prepared for game</h2>
 	</div>
-	<div class="user" ng-repeat="user in battleStartUsers">
+	<div class="user" ng-repeat="user in battleStartUsers" ng-click="initGame(user)">
 		{{user}}
 	</div>
 </div>

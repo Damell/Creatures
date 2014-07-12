@@ -8,6 +8,9 @@ module.exports = function(System, app, auth, database) {
 
 	app.io.on('connection', function (socket) {
 
+		/**
+		 * Update users waiting for game
+		 */
 		socket.on('start', function (data) {
 			console.log('connect ' + data);
 			socket.broadcast.emit('join', data);
@@ -17,6 +20,19 @@ module.exports = function(System, app, auth, database) {
 		socket.on('prev_connected', function (data) {
 			console.log('prev_connected ' + data);
 			socket.broadcast.emit('prev_connected', data);
+		});
+
+		/**
+		 * Init game
+		 */
+		socket.on('initGame', function (data) {
+			socket.join(data.room);
+			socket.broadcast.emit('initGame', data);
+		});
+
+		socket.on('joinGame', function (data) {
+			socket.join(data.room);
+			socket.to(data.room).emit('gameConnection', 'startingGame');
 		});
 
 	});

@@ -5,9 +5,13 @@ angular.module('mean.system')
     $scope.global = Global;
 }])
 .controller('CreatureController', ['$scope', 'Global', 'socket', function ($scope, Global, socket) {
+    $scope.global = Global;
 	$scope.battleStartUsers = [];
 	var username = window.user.username;
 
+	/**
+	 * Update users waiting for game
+	 */
 	socket.emit('start', username);
 	socket.on('echo', function() {
 		socket.emit('prev_connected', username);
@@ -16,17 +20,26 @@ angular.module('mean.system')
 		console.log( 'join ' + user);
 		if ($scope.battleStartUsers.indexOf(user) === -1)
 		$scope.battleStartUsers.push(user);
-		//jQuery.unique($scope.battleStartUsers);
 	});
 	socket.on('prev_connected', function (user) {
 		console.log( 'prev_connected ' + user);
 		if ($scope.battleStartUsers.indexOf(user) === -1)
 		$scope.battleStartUsers.push(user);
-		//jQuery.unique($scope.battleStartUsers);
 	});
 
-	socket.on('join', function () {
-		console.log('join');
+	$scope.initGame = function (user) {
+		console.log((new Date()).toString());
+		socket.emit('initGame', {user: user, room: (new Date()).toString()});
+	};
+
+	socket.on('initGame', function(data) {
+		if (data.user === username) {
+			socket.emit('joinGame', data);
+		}
 	});
-    $scope.global = Global;
+
+	socket.on('gameConnection', function(data) {
+		console.log(data);
+	});
+
 }]);
