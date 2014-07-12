@@ -2,7 +2,7 @@
 'use strict';
 
 angular.module('mean.system')
-.controller('BattleController', ['$scope', 'Global', function ($scope, Global) {
+.controller('BattleController', ['$scope', 'Global', 'socket', function ($scope, Global, socket) {
     $scope.global = Global;
     console.log( 'Battle started' );
 
@@ -148,4 +148,16 @@ angular.module('mean.system')
       opponent = gameState.players[1];
       updateArena();
     });
+
+	$scope.sendData = function (data) {
+		var dataReady = window.gameConnection;
+		dataReady.data = data;
+		socket.emit('gameConnection', dataReady);
+	};
+
+	socket.on('gameConnection' function (data) {
+		console.log(data);
+	});
+	sendData();
+
 }]);

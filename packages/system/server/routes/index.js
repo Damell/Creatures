@@ -12,13 +12,11 @@ module.exports = function(System, app, auth, database) {
 		 * Update users waiting for game
 		 */
 		socket.on('start', function (data) {
-			console.log('connect ' + data);
 			socket.broadcast.emit('join', data);
 			socket.broadcast.emit('echo', '');
 		});
 		
 		socket.on('prev_connected', function (data) {
-			console.log('prev_connected ' + data);
 			socket.broadcast.emit('prev_connected', data);
 		});
 
@@ -32,9 +30,15 @@ module.exports = function(System, app, auth, database) {
 
 		socket.on('joinGame', function (data) {
 			socket.join(data.room);
-			socket.to(data.room).emit('gameConnection', 'startingGame');
+			socket.to(data.room).emit('gameConnection', data);
 		});
 
+		/**
+		 * Game connection
+		 */
+		socket.on('gameConnection', function (data) {
+			socket.to(data.room).emit('gameConnection', data);
+		});
 	});
 
 };

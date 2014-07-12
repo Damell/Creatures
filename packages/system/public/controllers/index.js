@@ -34,12 +34,17 @@ angular.module('mean.system')
 
 	socket.on('initGame', function(data) {
 		if (data.user === username) {
+			window.gameConnection = data;
+			socket.removeremoveAllListeners();
+			data.user = username;
 			socket.emit('joinGame', data);
 		}
 	});
 
 	socket.on('gameConnection', function(data) {
-		console.log(data);
+		window.gameConnection = data;
+		socket.removeremoveAllListeners();
+		location.url('/battle');
 	});
 
 }]);
