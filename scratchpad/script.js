@@ -11,6 +11,8 @@ var gameState,
 // Create SVG to hold game arena
 var width = 800;
 var height = 600;
+var creatureSize = 50; // How big creatures should be
+var shotSize = 10; // How big shots should be
 var arena = d3.select('body').append('svg')
   .attr('width', width)
   .attr('height', height)
@@ -22,7 +24,7 @@ var positionCreature = function( creature ) {
   creature
     .attr('cx', function(d) { return d.position.x; })
     .attr('cy', function(d) { return d.position.y; })
-    .attr('r', 50);
+    .attr('r', creatureSize);
 };
 
 // Add behaviour for dragging, to shoot
@@ -53,7 +55,7 @@ var drag = d3.behavior.drag()
 
 var fire = function( shot ) {
   // Normalize direction
-  var factor = shot.direction.y > 0 ? ( height - shot.position.y ) / shot.direction.y : shot.position.y / shot.direction.y;
+  var factor = shot.direction.y > 0 ? ( height - shot.position.y - 50 ) / shot.direction.y : ( shot.position.y -50 ) / shot.direction.y;
   shot.direction.x *= factor;
   shot.direction.y *= factor;
   gameState.shots.push( shot );
@@ -83,10 +85,9 @@ var render = function() {
   health
     .enter().append( 'text' )
       .classed('health', true)
-      .attr("x", function(d) { return d.position.x - 10; })
-      .attr("y", function(d) {
-        return d.position.y + 70;
-      });
+      .style('fill', '#ff7700')
+      .attr("x", function(d) { return d.position.x; })
+      .attr("y", function(d) { return d.position.y; });
 
   health
     .text( function( d ) { return d.health; } );
@@ -99,7 +100,7 @@ var render = function() {
     .data( gameState.shots )
     .enter().append( 'circle' )
       .classed('shot', true)
-      .attr('r', 10)
+      .attr('r', shotSize)
       .attr('cx', function(d) { return d.position.x; })
       .attr('cy', function(d) { return d.position.y; })
       .style('fill', '#ffffff')
@@ -107,9 +108,18 @@ var render = function() {
       .ease( 'linear' )
       .attr('cx', function(d) { return d.position.x + d.direction.x; })
       .attr('cy', function(d) { return d.position.y + d.direction.y; })
-      .each( function( d, i ) {
+      .each( 'end', function( d, i ) {
         // Remove shot at end of animation
         gameState.shots.splice( i, 1 );
+        
+        // Check if we hit something (pretty terrible hit-testing, should use line/circle intersection)
+        for ( var i in opponent.creatures ) {
+          var creature = opponent.creatures[i];
+          if ( Math.abs( d.position.x + d.direction.x - creature.position.x ) < 1.1 * creatureSize ) {
+            creature.health -= 10;
+            render();
+          }
+        }
       })
       .remove();
 };
