@@ -8,13 +8,15 @@ module.exports = function(System, app, auth, database) {
 
 	app.io.on('connection', function (socket) {
 
-		socket.on('connect', function (data) {
+		socket.on('start', function (data) {
+			console.log('connect ' + data);
 			app.io.emit('join', data);
 			app.io.emit('echo');
 		});
 		
 		app.io.on('prev_connected', function (data) {
-			app.io.emit('join', data);
+			console.log('prev_connected ' + data);
+			app.io.emit('prev_connected', data);
 		});
 
 		// event listeners
