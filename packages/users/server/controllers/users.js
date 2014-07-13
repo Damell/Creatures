@@ -50,7 +50,7 @@ exports.gameDataUpdate = function(req, res) {
 			if (req.body.creatures) user.creatures = req.body.creatures;
 			if (req.body.food) user.food = req.body.food;
 			user.save();
-			res.send('OK');
+			res.send(user);
 		});
 	}
 };

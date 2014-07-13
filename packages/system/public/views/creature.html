@@ -1,13 +1,45 @@
-<section data-ng-controller="CreatureController" id="creature-window" class="row">
-<div class="col-xs-8">
-CREATURE
-</div>
-<div class="col-xs-4 battle-start">
-	<div class="header">
-		<h2>Users prepared for game</h2>
+<section data-ng-controller="CreatureController" id="creature-window" class="container">
+<!--
+<div class="row panel">
+	<div class="col-xs-4">
 	</div>
-	<div class="user" ng-repeat="user in battleStartUsers" ng-click="initGame(user)">
-		{{user}}
+	<div class="col-xs-4">
+	</div>
+	<div class="col-xs-4" ng-click="feed()">
+		Food: {{ food }}
+	</div>
+</div>
+-->
+<div class="row body">
+	<div class="col-xs-8">
+		CREATURE
+	</div>
+	<div class="col-xs-4 battle-start">
+		<div class="header">
+			<h2>Creatures to be fed</h2>
+		</div>
+		<div class="user" ng-repeat="creature in creatures" ng-click="feedCreature(creature)">
+			{{creature.name}} || health: {{creature.health}}
+			|| attack: {{creature.attack}}
+			|| defense: {{creature.defense}}
+		</div>
+	</div>
+	<div class="col-xs-2 battle-start">
+		<div class="header">
+			<h2>Users prepared for game</h2>
+		</div>
+		<div class="user" ng-repeat="user in battleStartUsers" ng-click="initGame(user)">
+			{{user}}
+		</div>
 	</div>
 </div>
 </section>
+
+
+<!-- Small modal -->
+<button class="btn btn-primary" data-toggle="feedModal" data-target=".bs-example-modal-sm">Small modal</button>
+
+<div id="feedModal" class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-sm">
+	</div>
+</div>
