@@ -117,7 +117,7 @@ angular.module('mean.system')
 
       // Only enable interaction on own creatures
       creatures.filter( function( d ) { return d.player === window.user.username; } ).call( drag );
-          
+
       // Update creatures
       creatures
           .call( positionCreature );
