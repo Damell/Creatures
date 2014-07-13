@@ -12,11 +12,35 @@ angular.module('mean.system')
 	var username = window.user.username;
 
 	Game.get().success(function (data) {
+		console.log(data);
+		$scope.food = data.food;
+		$scope.creatures = data.creatures;
 		data.food = 5;
 		Game.update(data).success(function (data) {
-			console.log(data);
 		});
 	});
+
+	$scope.update = function () {
+		var data = {
+			creatures: $scope.creatures,
+			food: $scope.food
+		};
+		Game.update(data).success(function (data) {
+			$scope.food = data.food;
+			$scope.creatures = data.creatures;
+		});
+	};
+
+	$scope.feed = function () {
+	};
+
+	$scope.feedCreature = function (creature) {
+		creature.health += 10;
+		creature.attack += 2;
+		creature.defense += 1;
+		$scope.update();
+		//$scope.creatures[$scope.creatures.indexOf(creature)];
+	};
 
 	/**
 	 * Update users waiting for game
@@ -44,6 +68,7 @@ angular.module('mean.system')
 	socket.on('initGame', function(data) {
 		if (data.user === username) {
 			window.gameConnection = data;
+			window.user.battleCreatures = $scope.creatures;
 			socket.removeAllListeners();
 			data.user = username;
 			socket.emit('joinGame', data);
@@ -53,6 +78,7 @@ angular.module('mean.system')
 
 	socket.on('gameConnection', function(data) {
 		window.gameConnection = data;
+		window.user.battleCreatures = $scope.creatures;
 		socket.removeAllListeners();
 		$location.url('/battle');
 	});
