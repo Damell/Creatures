@@ -20,7 +20,6 @@ var mean = require('meanio'),
 
 module.exports = function(app, passport, db) {
 
-console.log(config);
     app.set('showStackError', true);
 
     // Prettify HTML

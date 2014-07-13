@@ -18,49 +18,60 @@
 	</div>
 </div>
 
-	<div class="myModal col-xs-4 battle-start" ng-show="feeding">
-		<div class="header">
-			<h2>Creatures to be fed</h2>
-		</div>
-		<div class="user" ng-repeat="creature in creatures" ng-click="feedCreature(creature)">
-			{{creature.name}} || health: {{creature.health}}
-			|| attack: {{creature.attack}}
-			|| defense: {{creature.defense}}
-		</div>
+<div class="myModal col-xs-4 battle-start" ng-show="feeding">
+	<div class="header">
+		<h2>Creatures to be fed</h2>
 	</div>
-	<div class="myModal col-xs-4 battle-start" ng-show="showConnected">
-		<div class="header">
-			<h2>Users prepared for battle</h2>
-		</div>
-		<div class="user" ng-repeat="user in battleStartUsers" ng-click="initGame(user)">
-			{{user}}
-		</div>
+	<div class="user" ng-repeat="creature in creatures" ng-click="feedCreature(creature)">
+		{{creature.name}} || health: {{creature.health}}
+		|| attack: {{creature.attack}}
+		|| defense: {{creature.defense}}
 	</div>
+</div>
+<div class="myModal col-xs-4 battle-start" ng-show="showConnected">
+	<div class="header">
+		<h2>Users prepared for battle</h2>
+	</div>
+	<div class="user" ng-repeat="user in battleStartUsers" ng-click="initGame(user)">
+		{{user}}
+	</div>
+</div>
 <div class="myModal" class="col-xs-8 col-xs-offset-2" ng-if="creatingCreature">
-		<input type="text" ng-model="newCreature.name"></input>
-		health: {{newCreature.health}}
-		|| attack: {{newCreature.attack}}
-		|| defense: {{newCreature.defense}}
-		<div class="button" ng-click="addCreature()">
-			<h4>
-				Add creature
-			</h4>
-		</div>
+	<div class="header">
+		<h2>New Creature</h2>
 	</div>
+	<input type="text" ng-model="newCreature.name"></input>
+	<ul>
+		<li>
+		health: {{newCreature.health}}
+		</li>
+		<li>
+		attack: {{newCreature.attack}}
+		</li>
+		<li>
+		defense: {{newCreature.defense}}
+		</li>
+	</ul>
+	<div class="button" ng-click="addCreature()">
+		<h4>
+			Add creature
+		</h4>
+	</div>
+</div>
 </div>
 
 <div class="myModal" class="col-xs-8 col-xs-offset-2" ng-if="battleStarting">
-		Select up to three creatures
-		<div class="user" ng-repeat="creature in creatures" ng-click="selectCreature(creature)" ng-class="{active: creatureActive(creature)}">
-			{{creature.name}} 
-			|| health: {{creature.health}}
-			|| attack: {{creature.attack}}
-			|| defense: {{creature.defense}}
-		</div>
-		<div class="button" ng-click="startBattle()">
-			<h4>
-				Start battle
-			</h4>
-		</div>
+	Select up to three creatures
+	<div class="user" ng-repeat="creature in creatures" ng-click="selectCreature(creature)" ng-class="{active: creatureActive(creature)}">
+		{{creature.name}} 
+		|| health: {{creature.health}}
+		|| attack: {{creature.attack}}
+		|| defense: {{creature.defense}}
+	</div>
+	<div class="button" ng-click="startBattle()">
+		<h4>
+			Start battle
+		</h4>
+	</div>
 </div>
 </section>
