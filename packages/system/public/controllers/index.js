@@ -7,7 +7,9 @@ angular.module('mean.system')
 .controller('CreatureController', ['$scope', 'Global', 'Game', 'socket', '$location', function ($scope, Global, Game, socket, $location) {
     $scope.global = Global;
 	$scope.battleStartUsers = [];
+	$scope.battleStarting = false;
 	var username = window.user.username;
+	window.user.battleCreatures = [];
 
 	Game.get().success(function (data) { 
 		console.log(data);
@@ -40,6 +42,13 @@ angular.module('mean.system')
 		//$scope.creatures[$scope.creatures.indexOf(creature)];
 	};
 
+	$scope.selectCreature = function (creature) {
+		if ( window.user.battleCreatures.length < 3) {
+			window.user.battleCreatures.push(creature);
+		}
+	};
+
+
 	/**
 	 * Update users waiting for game
 	 */
@@ -66,19 +75,21 @@ angular.module('mean.system')
 	socket.on('initGame', function(data) {
 		if (data.user === username) {
 			window.gameConnection = data;
-			window.user.battleCreatures = $scope.creatures;
 			socket.removeAllListeners();
 			data.user = username;
 			socket.emit('joinGame', data);
-			$location.url('/battle');
+			$scope.battleStarting = true;
 		}
 	});
 
 	socket.on('gameConnection', function(data) {
 		window.gameConnection = data;
-		window.user.battleCreatures = $scope.creatures;
 		socket.removeAllListeners();
-		$location.url('/battle');
+		$scope.battleStarting = true;
 	});
+	$scope.startBattle = function () {
+		console.log(window.user.battleCreatures);
+		$location.url('/battle');
+	};
 
 }]);
