@@ -15,12 +15,12 @@ var validatePresenceOf = function(value) {
     return (this.provider && this.provider !== 'local') || (value && value.length);
 };
 
-var validateUniqueEmail = function(value, callback) {
+/*var validateUniqueEmail = function(value, callback) {
     var User = mongoose.model('User');
     User.find({ _id: { $ne : this._id }}, function(err, user) {
         callback(err || user.length === 0);
     });
-};
+};*/
 
 /**
  * User Schema
@@ -33,8 +33,7 @@ var UserSchema = new Schema({
     },
     email: {
         type: String,
-        required: false,
-        match: [/.+\@.+\..+/, 'Please enter a valid email']
+        required: false
     },
     username: {
         type: String,
