@@ -43,7 +43,9 @@ angular.module('mean.system')
 	};
 
 	$scope.selectCreature = function (creature) {
+	console.log('test');
 		if ( window.user.battleCreatures.length < 3) {
+	console.log('test2');
 			window.user.battleCreatures.push(creature);
 		}
 	};
