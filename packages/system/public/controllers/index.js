@@ -64,6 +64,7 @@ angular.module('mean.system')
 	$scope.addCreature = function () {
 		$scope.creatures.push(angular.copy($scope.newCreature));
 		$scope.update();
+		$scope.creatingCreature = false;
 	};
 
 	$scope.creatureActive = function (creature) {
