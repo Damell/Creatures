@@ -18,7 +18,7 @@ angular.module('mean.system')
 		data.food = 5;
 		Game.update(data).success(function (data) {
 		});
-    //$scope.images=$scope.creatures.map(function(creature) {
+    //$scope.images=data.creatures.map(function(creature) {
       //var name = creature.name;
       //return {src: 'http://robohash.org/'+name, title: name};
     //});
@@ -32,6 +32,10 @@ angular.module('mean.system')
     Game.update(data).success(function (data) {
       $scope.food = data.food;
       $scope.creatures = data.creatures;
+    //$scope.images=$scope.creatures.map(function(creature) {
+      //var name = creature.name;
+      //return {src: 'http://robohash.org/'+name, title: name};
+    //});
 
       //$scope.images=$scope.creatures.map(function(creature) {
         //var name = creature.name;
@@ -101,9 +105,11 @@ angular.module('mean.system')
     $location.url('/battle');
   };
 
-  $scope.images = ['Creature1', 'Creature2', 'Crea4353', '543534tsgsd' ].map(function(creature) {
-      var name = creature;
-      return {src: 'http://robohash.org/'+name, title: name};
-  });
+
+
+  //$scope.images = ['Creature1', 'sCreature2', 'Crea4353', '543534tsgsd' ].map(function(creature) {
+      //var name = creature;
+      //return {src: 'http://robohash.org/'+name, title: name};
+  //});
 
 }]);

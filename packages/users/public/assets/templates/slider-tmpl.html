@@ -1,9 +1,9 @@
 <div class="slider">
-	<div class="slide" ng-repeat="image in images" ng-show="image.visible">
-    <img ng-src="{{image.src}}" alt="{{image.title}}"/>
+	<div class="slide" ng-repeat="creature in creatures" ng-show="creature.visible">
+    <img ng-src="http://robohash.org/{{creature.name}}" alt="{{creature.name}}"/>
 	</div>
 	<div class="arrows">
-		<a href="#" class='left-arrow' ng-click="prev()"><img src="/users/assets/img/slider/left-arrow.png"/></a> 
+		<a href="#" class='left-arrow ' ng-click="prev()"><img src="/users/assets/img/slider/left-arrow.png"/></a> 
     <a href="#" class='right-arrow' ng-click="next()"><img src="/users/assets/img/slider/right-arrow.png"/></a>
 	</div>
 </div>

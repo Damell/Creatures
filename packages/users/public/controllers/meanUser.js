@@ -119,14 +119,14 @@ angular.module('mean.users', ['ngAnimate'])
     restrict: 'AE',
 	replace: true,
 	scope:{
-		images: '='
+		creatures: '='
 	},
     link: function (scope, elem, attrs) {
 
 		scope.currentIndex=0;
 
 		scope.next=function(){
-			if (scope.currentIndex<scope.images.length-1){
+			if (scope.currentIndex<scope.creatures.length-1){
         scope.currentIndex++;}
         else{
           scope.currentIndex=0;
@@ -136,15 +136,15 @@ angular.module('mean.users', ['ngAnimate'])
 		scope.prev=function(){
 			if (scope.currentIndex>0){
         scope.currentIndex--;}else{
-          scope.currentIndex=scope.images.length-1;
+          scope.currentIndex=scope.creatures.length-1;
         }
 		};
 
-		scope.$watch('currentIndex',function(){
-			scope.images.forEach(function(image){
-				image.visible=false;
+		scope.$watch(function(){
+			scope.creatures.forEach(function(creature){
+				creature.visible=false;
 			});
-			scope.images[scope.currentIndex].visible=true;
+			scope.creatures[scope.currentIndex].visible=true;
 		});
 
 
