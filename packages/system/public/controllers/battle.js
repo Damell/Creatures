@@ -182,9 +182,14 @@ angular.module('mean.system')
 
   // Receive/send data
 	$scope.sendData = function (data) {
-		var dataReady = {room: window.gameConnection.room};
-    dataReady.data = data;
-    socket.emit('gameConnection', dataReady);
+		var dataReady = {};
+		if (window.gameConnection === undefined) {
+			alert('Go back and pick an enemy!');
+		} else {
+			dataReady.room = window.gameConnection.room;
+		}
+		dataReady.data = data;
+		socket.emit('gameConnection', dataReady);
 	};
 
   socket.on('gameConnection', function (data) {
