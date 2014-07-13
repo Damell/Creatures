@@ -3,6 +3,7 @@
 
 angular.module('mean.system')
 .controller('BattleController', ['$location', '$scope', 'Global', 'socket', function ($location, $scope, Global, socket) {
+	$scope.connectionReady = false;
     $scope.global = Global;
     console.log( 'Battle started' );
     console.log( window.user.battleCreatures );
@@ -196,6 +197,9 @@ angular.module('mean.system')
     mergeState( data );
     console.log( gameState );
     updateArena();
+	if ( !$scope.connectionReady ) {
+		$scope.sendData(data);
+	}
   });
 
   // Generate game data
