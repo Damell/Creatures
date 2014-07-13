@@ -7,7 +7,7 @@ angular.module('mean.system')
 .controller('CreatureController', ['$scope', 'Global', 'Game', 'socket', '$location', function ($scope, Global, Game, socket, $location) {
     $scope.global = Global;
 	$scope.battleStartUsers = [];
-   //scope.images=[{src:'img1.png',title:'Pic 1'},{src:'img2.jpg',title:'Pic 2'},{src:'img3.jpg',title:'Pic 3'},{src:'img4.png',title:'Pic 4'},{src:'img5.png',title:'Pic 5'}];
+
 
 	var username = window.user.username;
 
@@ -82,5 +82,11 @@ angular.module('mean.system')
 		socket.removeAllListeners();
 		$location.url('/battle');
 	});
+
+   //scope.images=[{src:'img1.png',title:'Pic 1'},{src:'img2.jpg',title:'Pic 2'},{src:'img3.jpg',title:'Pic 3'},{src:'img4.png',title:'Pic 4'},{src:'img5.png',title:'Pic 5'}];
+   $scope.images=$scope.creatures.map(function(creature) {
+     var name = creature.name;
+     return {src: 'http://robohash.org/'+name, title: name};
+   });
 
 }]);
