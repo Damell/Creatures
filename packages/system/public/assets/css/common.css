@@ -79,6 +79,9 @@ footer p {
 .battleStartModal .creature {
 	background: #444;
 }
+.battleStartModal .active {
+	background: #444;
+}
 .battleStartModal .creature input {
 	background: #333;
 }

@@ -60,6 +60,10 @@ angular.module('mean.system')
 		$scope.update();
 	};
 
+	$scope.creatureActive = function (creature) {
+		return window.user.battleCreatures.indexOf(creature) !== -1;
+	};
+
 
 	/**
 	 * Update users waiting for game

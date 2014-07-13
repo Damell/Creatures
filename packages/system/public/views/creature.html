@@ -50,7 +50,7 @@
 
 <div class="battleStartModal" class="col-xs-8 col-xs-offset-2" ng-if="battleStarting">
 		Select up to three creatures
-		<div class="user" ng-repeat="creature in creatures" ng-click="selectCreature(creature)" ng-class="active: creatureActive(creature)">
+		<div class="user" ng-repeat="creature in creatures" ng-click="selectCreature(creature)" ng-class="{active: creatureActive(creature)}">
 			{{creature.name}} 
 			|| health: {{creature.health}}
 			|| attack: {{creature.attack}}
