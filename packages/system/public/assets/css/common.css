@@ -90,3 +90,6 @@ footer p {
 .slide img {
 	height: 200px;
 }
+.slide .stats {
+	padding: 5px;
+}

@@ -51,12 +51,14 @@ angular.module('mean.system')
       if ( _.every( teams[0], dead ) ) {
         console.log( 'You won!' );
 		alert('You won!');
+		window.user.food = 3;
         $location.url( '/creature' );
         $scope.$apply();
       }
       if ( _.every( teams[1], dead ) ) {
         console.log( 'You lost!' );
 		alert('You lost!');
+		window.user.food = 1;
         $location.url( '/creature' );
         $scope.$apply();
       }

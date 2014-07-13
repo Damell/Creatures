@@ -24,6 +24,10 @@ angular.module('mean.system')
 		console.log(data);
 		$scope.food = data.food;
 		$scope.creatures = data.creatures;
+		if (window.user.food > 0) {
+			$scope.food += window.user.food;
+			$scope.update();
+		}
 	});
 
 	$scope.update = function () {
