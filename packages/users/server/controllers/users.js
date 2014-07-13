@@ -47,7 +47,6 @@ exports.gameDataUpdate = function(req, res) {
 		})
 		.exec(function(err, user) {
 			if (!user) return res.send(new Error('Failed to load User '));
-			console.log(req.body);
 			if (req.body.creatures) user.creatures = req.body.creatures;
 			if (req.body.food) user.food = req.body.food;
 			user.save();
