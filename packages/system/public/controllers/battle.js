@@ -48,14 +48,14 @@ angular.module('mean.system')
       // Select creatures from each team
       var teams = _.partition( gameState.creatures, function( c ) { return c.player === window.user.username; } );
       var dead = function( c ) { return c.health <= 0; };
-      if ( _.every( teams[0], dead ) ) {
+      if ( _.every( teams[1], dead ) ) {
         console.log( 'You won!' );
 		alert('You won!');
 		window.user.food = 3;
         $location.url( '/creature' );
         $scope.$apply();
       }
-      if ( _.every( teams[1], dead ) ) {
+      if ( _.every( teams[0], dead ) ) {
         console.log( 'You lost!' );
 		alert('You lost!');
 		window.user.food = 1;
