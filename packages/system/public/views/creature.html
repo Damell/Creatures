@@ -1,5 +1,19 @@
-<section data-ng-controller="CreatureController" id="creature-window" class="container">
+<section data-ng-controller="CreatureController" class="creature-window" class="container">
 <slider images='images' />
+<div class="battleStartModal" class="col-xs-8 col-xs-offset-2" ng-if="battleStarting">
+		Select up to three creatures
+		<div class="user" ng-repeat="creature in creatures" ng-click="selectCreature(creature)">
+			{{creature.name}} || health: {{creature.health}}
+			|| attack: {{creature.attack}}
+			|| defense: {{creature.defense}}
+		</div>
+		<div class="button" ng-click="startBattle">
+			<h4>
+				Start battle
+			</h4>
+		</div>
+</div>
+
 <!--
 <div class="row panel">
 	<div class="col-xs-4">
@@ -12,7 +26,7 @@
 </div>
 -->
 <div class="row body">
-	<div class="col-xs-8">
+	<div class="col-xs-6">
 		CREATURE
 	</div>
 	<div class="col-xs-4 battle-start">
@@ -35,12 +49,3 @@
 	</div>
 </div>
 </section>
-
-
-<!-- Small modal -->
-<button class="btn btn-primary" data-toggle="feedModal" data-target=".bs-example-modal-sm">Small modal</button>
-
-<div id="feedModal" class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
-	<div class="modal-dialog modal-sm">
-	</div>
-</div>

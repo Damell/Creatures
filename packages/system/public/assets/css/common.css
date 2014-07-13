@@ -59,11 +59,19 @@ footer p {
 .battle-start .user:hover {
 	background: #333;
 }
-#creature-window .panel {
+.creature-window .panel {
 	background: #8f8;
 	height: 50px;
 }
-#creature-window .panel div {
+.creature-window .panel div {
 	cursor: pointer;
 	font-size: 20px;
+}
+.battleStartModal {
+	position: absolute;
+	background: black;
+	color: white;
+}
+.battleStartModal .creature {
+	background: #444;
 }

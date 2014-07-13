@@ -7,9 +7,9 @@ angular.module('mean.system')
 .controller('CreatureController', ['$scope', 'Global', 'Game', 'socket', '$location', function ($scope, Global, Game, socket, $location) {
     $scope.global = Global;
 	$scope.battleStartUsers = [];
-
-
+	$scope.battleStarting = false;
 	var username = window.user.username;
+	window.user.battleCreatures = [];
 
 	Game.get().success(function (data) {
 		console.log(data);
@@ -18,75 +18,89 @@ angular.module('mean.system')
 		data.food = 5;
 		Game.update(data).success(function (data) {
 		});
-	});
+    $scope.images=$scope.creatures.map(function(creature) {
+      var name = creature.name;
+      return {src: 'http://robohash.org/'+name, title: name};
+    });
+  });
 
-	$scope.update = function () {
-		var data = {
-			creatures: $scope.creatures,
-			food: $scope.food
-		};
-		Game.update(data).success(function (data) {
-			$scope.food = data.food;
-			$scope.creatures = data.creatures;
-		});
-	};
+  $scope.update = function () {
+    var data = {
+      creatures: $scope.creatures,
+      food: $scope.food
+    };
+    Game.update(data).success(function (data) {
+      $scope.food = data.food;
+      $scope.creatures = data.creatures;
 
-	$scope.feed = function () {
-	};
+      $scope.images=$scope.creatures.map(function(creature) {
+        var name = creature.name;
+        return {src: 'http://robohash.org/'+name, title: name};
+      });
+    });
+  };
 
-	$scope.feedCreature = function (creature) {
-		creature.health += 10;
-		creature.attack += 2;
-		creature.defense += 1;
-		$scope.update();
-		//$scope.creatures[$scope.creatures.indexOf(creature)];
-	};
+  $scope.feed = function () {
+  };
 
-	/**
-	 * Update users waiting for game
-	 */
-	socket.emit('start', username);
-	socket.on('echo', function() {
-		socket.emit('prev_connected', username);
-	});
-	socket.on('join', function (user) {
-		console.log( 'join ' + user);
-		if ($scope.battleStartUsers.indexOf(user) === -1)
-		$scope.battleStartUsers.push(user);
-	});
-	socket.on('prev_connected', function (user) {
-		console.log( 'prev_connected ' + user);
-		if ($scope.battleStartUsers.indexOf(user) === -1)
-		$scope.battleStartUsers.push(user);
-	});
+  $scope.feedCreature = function (creature) {
+    creature.health += 10;
+    creature.attack += 2;
+    creature.defense += 1;
+    $scope.update();
+    //$scope.creatures[$scope.creatures.indexOf(creature)];
+  };
 
-	$scope.initGame = function (user) {
-		console.log((new Date()).toString());
-		socket.emit('initGame', {user: user, room: (new Date()).toString()});
-	};
+  $scope.selectCreature = function (creature) {
+    if ( window.user.battleCreatures.length < 3) {
+      window.user.battleCreatures.push(creature);
+    }
+  };
 
-	socket.on('initGame', function(data) {
-		if (data.user === username) {
-			window.gameConnection = data;
-			window.user.battleCreatures = $scope.creatures;
-			socket.removeAllListeners();
-			data.user = username;
-			socket.emit('joinGame', data);
-			$location.url('/battle');
-		}
-	});
 
-	socket.on('gameConnection', function(data) {
-		window.gameConnection = data;
-		window.user.battleCreatures = $scope.creatures;
-		socket.removeAllListeners();
-		$location.url('/battle');
-	});
+  /**
+   * Update users waiting for game
+   */
+  socket.emit('start', username);
+  socket.on('echo', function() {
+    socket.emit('prev_connected', username);
+  });
+  socket.on('join', function (user) {
+    console.log( 'join ' + user);
+    if ($scope.battleStartUsers.indexOf(user) === -1)
+      $scope.battleStartUsers.push(user);
+  });
+  socket.on('prev_connected', function (user) {
+    console.log( 'prev_connected ' + user);
+    if ($scope.battleStartUsers.indexOf(user) === -1)
+      $scope.battleStartUsers.push(user);
+  });
 
-   //scope.images=[{src:'img1.png',title:'Pic 1'},{src:'img2.jpg',title:'Pic 2'},{src:'img3.jpg',title:'Pic 3'},{src:'img4.png',title:'Pic 4'},{src:'img5.png',title:'Pic 5'}];
-   $scope.images=$scope.creatures.map(function(creature) {
-     var name = creature.name;
-     return {src: 'http://robohash.org/'+name, title: name};
-   });
+  $scope.initGame = function (user) {
+    console.log((new Date()).toString());
+    socket.emit('initGame', {user: user, room: (new Date()).toString()});
+  };
+
+  socket.on('initGame', function(data) {
+    if (data.user === username) {
+      window.gameConnection = data;
+      socket.removeAllListeners();
+      data.user = username;
+      socket.emit('joinGame', data);
+      $scope.battleStarting = true;
+    }
+  });
+
+  socket.on('gameConnection', function(data) {
+    window.gameConnection = data;
+    socket.removeAllListeners();
+    $scope.battleStarting = true;
+  });
+  $scope.startBattle = function () {
+    console.log(window.user.battleCreatures);
+    $location.url('/battle');
+  };
+
+  //scope.images=[{src:'img1.png',title:'Pic 1'},{src:'img2.jpg',title:'Pic 2'},{src:'img3.jpg',title:'Pic 3'},{src:'img4.png',title:'Pic 4'},{src:'img5.png',title:'Pic 5'}];
 
 }]);
