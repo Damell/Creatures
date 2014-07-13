@@ -6,12 +6,13 @@ angular.module('mean.system')
 }])
 .controller('CreatureController', ['$scope', 'Global', 'Game', 'socket', '$location', function ($scope, Global, Game, socket, $location) {
     $scope.global = Global;
+    $scope.images = '';
 	$scope.battleStartUsers = [];
 	var username = window.user.username;
 
-	Game.get().success(function (data) { 
+	Game.get().success(function (data) {
 		data.food = 5;
-		Game.update(data).success(function (data) { 
+		Game.update(data).success(function (data) {
 			console.log(data);
 		});
 	});
