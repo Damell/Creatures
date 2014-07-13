@@ -2,7 +2,7 @@
 'use strict';
 
 angular.module('mean.system')
-.controller('BattleController', ['$scope', 'Global', 'socket', function ($scope, Global, socket) {
+.controller('BattleController', ['$location', '$scope', 'Global', 'socket', function ($location, $scope, Global, socket) {
     $scope.global = Global;
     console.log( 'Battle started' );
     console.log( window.user.battleCreatures );
@@ -41,6 +41,22 @@ angular.module('mean.system')
         .attr('y', function(d) { return d.position.y - 64; })
         .attr('width', 128)
         .attr('height', 128);
+    };
+
+    var checkGameEnd = function() {
+      // Select creatures from each team
+      var teams = _.partition( gameState.creatures, function( c ) { return c.player === window.user.username; } );
+      var dead = function( c ) { return c.health <= 0; };
+      if ( _.every( teams[0], dead ) ) {
+        console.log( 'You won!' );
+        $location.url( '/creature' );
+        $scope.$apply();
+      }
+      if ( _.every( teams[1], dead ) ) {
+        console.log( 'You lost!' );
+        $location.url( '/creature' );
+        $scope.$apply();
+      }
     };
 
     // Add behaviour for dragging, to shoot
@@ -97,8 +113,10 @@ angular.module('mean.system')
 
       // Create new creatures
       creatures.enter().append( 'image' )
-          .classed('creature', true)
-          .call( drag );
+          .classed('creature', true);
+
+      // Only enable interaction on own creatures
+      creatures.filter( function( d ) { return d.player === window.user.username; } ).call( drag );
           
       // Update creatures
       creatures
@@ -143,6 +161,7 @@ angular.module('mean.system')
                 if ( Math.abs( d.position.x + d.direction.x - creature.position.x ) < 1.1 * creatureSize &&
                      Math.abs( d.position.y + d.direction.y - creature.position.y ) < 2.0 * creatureSize) {
                   creature.health -= 10;
+                  checkGameEnd();
                   updateArena();
                   break;
                 }
