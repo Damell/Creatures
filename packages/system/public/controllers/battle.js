@@ -174,23 +174,18 @@ angular.module('mean.system')
     updateArena();
   });
 
-  // Generate game data (mock out data for now)
+  // Generate game data
   gameState = {
     'creatures': [],
     'shots': []
   };
-  for( var a = 0; a < 3; a++ ) {
-    var creature = {
-      'id': 'creature_' + a,
-      'player': window.user.username,
-      'health': 100,
-      'attack': 7,
-      'defense': 4,
-      'type': 'fire',
-      'position': {
-        'x': 50 + 350 * a,
-        'y': 50
-      }
+  for( var a = 0; a < window.user.battleCreatures.length; a++ ) {
+    var creature = window.user.battleCreatures[a];
+    creature.id = creature._id; // TODO refactor to avoid id duplication
+    creature.player = window.user.username;
+    creature.position = {
+      'x': 50 + 350 * a,
+      'y': 50
     };
     gameState.creatures.push( creature );
   }
