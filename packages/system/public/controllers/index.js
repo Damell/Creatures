@@ -10,6 +10,12 @@ angular.module('mean.system')
 	$scope.battleStarting = false;
 	var username = window.user.username;
 	window.user.battleCreatures = [];
+	$scope.newCreature = {
+		name: window.user.username + '\'s Creature',
+		attack: 10,
+		health: 50,
+		defense: 5
+	};
 
 	Game.get().success(function (data) { 
 		console.log(data);
@@ -38,16 +44,20 @@ angular.module('mean.system')
 		creature.health += 10;
 		creature.attack += 2;
 		creature.defense += 1;
+		$scope.food -= 1;
 		$scope.update();
 		//$scope.creatures[$scope.creatures.indexOf(creature)];
 	};
 
 	$scope.selectCreature = function (creature) {
-	console.log('test');
 		if ( window.user.battleCreatures.length < 3) {
-	console.log('test2');
 			window.user.battleCreatures.push(creature);
 		}
+	};
+
+	$scope.addCreature = function () {
+		$scope.creatures.push(angular.copy($scope.newCreature));
+		$scope.update();
 	};
 
 

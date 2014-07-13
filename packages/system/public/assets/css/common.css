@@ -65,7 +65,11 @@ footer p {
 }
 .creature-window .panel div {
 	cursor: pointer;
-	font-size: 20px;
+	font-size: 15px;
+	padding: 8px;
+}
+.creature-window .panel div.active {
+	background: #6F6;
 }
 .battleStartModal {
 	position: absolute;
@@ -74,4 +78,7 @@ footer p {
 }
 .battleStartModal .creature {
 	background: #444;
+}
+.battleStartModal .creature input {
+	background: #333;
 }
