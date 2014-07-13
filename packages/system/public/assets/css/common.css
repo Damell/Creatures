@@ -61,17 +61,29 @@ footer p {
 }
 .creature-window .panel {
 	background: #8f8;
-	height: 50px;
 }
 .creature-window .panel div {
 	cursor: pointer;
-	font-size: 20px;
+	font-size: 15px;
+	padding: 8px;
 }
-.battleStartModal {
+.creature-window .panel div.active {
+	background: #3D3;
+}
+.myModal {
 	position: absolute;
 	background: black;
 	color: white;
+	padding: 10px;
+	top: 150px;
+	right: 0;
 }
-.battleStartModal .creature {
+.myModal .creature {
 	background: #444;
+}
+.myModal .active {
+	background: #444;
+}
+.myModal input {
+	background: #333;
 }

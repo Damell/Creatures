@@ -1,4 +1,7 @@
 <section data-ng-controller="CreatureController" class="creature-window" class="container">
+<<<<<<< HEAD
+
+
 <div class="battleStartModal" class="col-xs-8 col-xs-offset-2" ng-if="battleStarting">
 		Select up to three creatures
 		<div class="user" ng-repeat="creature in creatures" ng-click="selectCreature(creature)">
@@ -12,8 +15,9 @@
 			</h4>
 		</div>
 </div>
+=======
+>>>>>>> 55b3c0a1072a92f3aa9b823a6241b24246e1c955
 
-<!--
 <div class="row panel">
 	<div class="col-xs-4" ng-class="{active: creatingCreature}" ng-click="creatingCreature = !creatingCreature">
 		Add creature
@@ -25,15 +29,20 @@
 		Food for feeding: {{ food }}
 	</div>
 </div>
--->
 <div class="row body">
 	<div class="col-xs-6">
 		CREATURE
 	</div>
+<<<<<<< HEAD
   <div class='slider'>
     <slider creatures='creatures' />
   <div/>
 	<div class="col-xs-4 battle-start">
+=======
+</div>
+
+	<div class="myModal col-xs-4 battle-start" ng-show="feeding">
+>>>>>>> 55b3c0a1072a92f3aa9b823a6241b24246e1c955
 		<div class="header">
 			<h2>Creatures to be fed</h2>
 		</div>

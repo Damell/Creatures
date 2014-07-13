@@ -156,11 +156,11 @@ angular.module('mean.system')
     });
 
 	$scope.sendData = function (data) {
-		var dataReady = window.gameConnection;
-    if ( dataReady ) {
-      dataReady.data = data;
-      socket.emit('gameConnection', dataReady);
-    }
+		var dataReady = {room: window.gameConnection.room};
+		if ( dataReady ) {
+			dataReady.data = data;
+			socket.emit('gameConnection', dataReady);
+		}
 	};
 
 	socket.on('gameConnection', function (data) {
