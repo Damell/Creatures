@@ -2,20 +2,19 @@
 
 
 <div class="row panel">
-	<div class="col-xs-4" ng-class="{active: creatingCreature}" ng-click="creatingCreature = !creatingCreature">
+	<div class="col-xs-4" ng-class="{active: creatingCreature}" ng-click="creatingCreature=!creatingCreature;showConnected=false;feeding=false">
 		Add creature
 	</div>
-	<div class="col-xs-4" ng-class="{active: showConnected}" ng-click="showConnected = !showConnected">
+	<div class="col-xs-4" ng-class="{active: showConnected}" ng-click="showConnected=!showConnected;feeding=false;creatingCreature=falsE">
 		Go to battlefield
 	</div>
-	<div class="col-xs-4" ng-class="{active: feeding}" ng-click="feeding = !feeding">
+	<div class="col-xs-4" ng-class="{active: feeding}" ng-click="feeding=!feeding;showConnected=false;creatingCreature=false">
 		Food for feeding: {{ food }}
 	</div>
 </div>
 <div class="row body">
 	<div class="col-xs-6">
-		CREATURE
-  <slider creatures='creatures' />
+		<slider creatures='creatures' />
 	</div>
 </div>
 
