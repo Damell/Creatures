@@ -61,7 +61,6 @@ footer p {
 }
 .creature-window .panel {
 	background: #8f8;
-	height: 50px;
 }
 .creature-window .panel div {
 	cursor: pointer;
@@ -69,7 +68,7 @@ footer p {
 	padding: 8px;
 }
 .creature-window .panel div.active {
-	background: #6F6;
+	background: #3D3;
 }
 .myModal {
 	position: absolute;

@@ -50,7 +50,7 @@ angular.module('mean.system')
 	};
 
 	$scope.selectCreature = function (creature) {
-		if ( window.user.battleCreatures.length < 3) {
+		if ( window.user.battleCreatures.length < 3 && window.user.battleCreatures.indexOf(creature) === -1 ) {
 			window.user.battleCreatures.push(creature);
 		}
 	};
