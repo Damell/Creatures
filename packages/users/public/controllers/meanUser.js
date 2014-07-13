@@ -53,7 +53,7 @@ angular.module('mean.users')
                     $scope.registerError = 0;
                     $rootScope.user = $scope.user;
                     $rootScope.$emit('loggedin');
-                    $location.url('/');
+					$location.url('/creature');
                 })
                 .error(function(error) {
                     // Error: authentication failed
