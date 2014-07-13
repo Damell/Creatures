@@ -1,4 +1,4 @@
-/*global angular, d3*/
+/*global angular, d3, _*/
 'use strict';
 
 angular.module('mean.system')
@@ -35,7 +35,7 @@ angular.module('mean.system')
           var uniqueName = d.player + d.id;
           // TODO Massive security hole!!!!!
           return 'http://robohash.org/' + uniqueName;
-        } ) 
+        } )
         .attr('x', function(d) { return d.position.x - 64; })
         .attr('y', function(d) { return d.position.y - 64; })
         .attr('width', 128)
@@ -85,16 +85,22 @@ angular.module('mean.system')
       shot.direction.y *= factor;
       gameState.shots.push( shot );
       updateArena();
-	  $scope.sendData(gameState);
+      $scope.sendData(gameState);
     };
 
     // Rendering, binds actions to SVG elements using d3
     updateArena = function() {
       // Add creatures for player one (assuming it's `me`)
       var creatures = arena.selectAll( 'image.creature' )
-        .data( gameState.creatures ) // Bind creatures data set to selection
-        .enter().append( 'image' )
+        .data( gameState.creatures ); // Bind creatures data set to selection
+
+      // Create new creatures
+      creatures.enter().append( 'image' )
           .classed('creature', true)
+          .call( drag );
+          
+      // Update creatures
+      creatures
           .call( positionCreature );
 
       // Add health labels
@@ -112,7 +118,6 @@ angular.module('mean.system')
         .text( function( d ) { return d.health; } );
 
       // Bind drag behaviour to creatures
-      creatures.call( drag );
 
       // Add shots
       arena.selectAll( 'circle.shot' )
@@ -146,21 +151,19 @@ angular.module('mean.system')
           .remove();
     };
 
-    d3.json('system/data.json', function(error, json) {
-      if (error) {
-        return console.warn(error);
-      }
-      gameState = json;
-      init();
-      updateArena();
-    });
+    //d3.json('system/data.json', function(error, json) {
+    //  if (error) {
+    //    return console.warn(error);
+    //  }
+    //  gameState = json;
+    //  init();
+    //  updateArena();
+    //});
 
 	$scope.sendData = function (data) {
 		var dataReady = {room: window.gameConnection.room};
-		if ( dataReady ) {
-			dataReady.data = data;
-			socket.emit('gameConnection', dataReady);
-		}
+    dataReady.data = data;
+    socket.emit('gameConnection', dataReady);
 	};
 
 	socket.on('gameConnection', function (data) {
@@ -168,4 +171,73 @@ angular.module('mean.system')
 		updateArena();
 	});
 
+  // Receive/send data
+  $scope.sendData = function (data) {
+    var dataReady = window.gameConnection;
+    if ( dataReady ) {
+      dataReady.data = data;
+      socket.emit('gameConnection', dataReady);
+    }
+  };
+
+  socket.on('gameConnection', function (data) {
+    mergeState( data );
+    console.log( gameState );
+    updateArena();
+  });
+
+  // Generate game data (mock out data for now)
+  gameState = {
+    'creatures': [],
+    'shots': []
+  };
+  for( var a = 0; a < 3; a++ ) {
+    var creature = {
+      'id': 'creature_' + a,
+      'player': window.user.username,
+      'health': 100,
+      'attack': 7,
+      'defense': 4,
+      'type': 'fire',
+      'position': {
+        'x': 50 + 350 * a,
+        'y': 50
+      }
+    };
+    gameState.creatures.push( creature );
+  }
+  console.log( gameState );
+  $scope.sendData( gameState );
+  init();
+  //updateArena();
+
+  var mergeState = function( data ) {
+    console.log( 'Merging state' );
+    if ( data.data ) {
+      // Combine all creatures
+      gameState.creatures = gameState.creatures.concat( data.data.creatures );
+      gameState.creatures = _.uniq( gameState.creatures, false, function( d ) { return d.player + d.id; } );
+
+      // Combine all shots
+      gameState.shots = gameState.shots.concat( data.data.shots );
+      gameState.shots = _.uniq( gameState.shots, false, function( d ) { return d.creature.player + d.creature.id; } );
+
+      // Get players to figure out who to put at bottom
+      var players = _.uniq( _.pluck( gameState.creatures, 'player' ) );
+      players.sort();
+
+      // Shift bottom player's creatures to bottom of screen
+      var bottomPlayer = players[0];
+      console.log( 'players ' + players);
+      console.log( 'Bottom ' + bottomPlayer);
+      _.each( gameState.creatures, function( creature ) {
+        if ( creature.player === bottomPlayer ) {
+          creature.position.y = 550;
+        }
+      } );
+      //if ( bottomPlayer === me ) {
+      //  // Do something...
+      //}
+    }
+  };
 }]);
