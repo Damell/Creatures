@@ -35,7 +35,7 @@
 	</div>
 </div>
 
-<div class="battleStartModal" class="col-xs-8 col-xs-offset-2" ng-if="creatingCreature">
+<div class="modal" class="col-xs-8 col-xs-offset-2" ng-if="creatingCreature">
 		<input type="text" ng-model="newCreature.name"></input>
 		health: {{newCreature.health}}
 		|| attack: {{newCreature.attack}}
@@ -48,7 +48,7 @@
 	</div>
 </div>
 
-<div class="battleStartModal" class="col-xs-8 col-xs-offset-2" ng-if="battleStarting">
+<div class="modal" class="col-xs-8 col-xs-offset-2" ng-if="battleStarting">
 		Select up to three creatures
 		<div class="user" ng-repeat="creature in creatures" ng-click="selectCreature(creature)" ng-class="{active: creatureActive(creature)}">
 			{{creature.name}} 

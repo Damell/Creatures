@@ -68,7 +68,7 @@ var UserSchema = new Schema({
 			type: Number,
 			default: 5
 		},
-		creatyre_type: {
+		creature_type: {
 			type: String ,
 			default: 'fire'
 		}

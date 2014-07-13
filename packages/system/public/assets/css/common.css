@@ -71,17 +71,17 @@ footer p {
 .creature-window .panel div.active {
 	background: #6F6;
 }
-.battleStartModal {
+.modal {
 	position: absolute;
 	background: black;
 	color: white;
 }
-.battleStartModal .creature {
+.modal .creature {
 	background: #444;
 }
-.battleStartModal .active {
+.modal .active {
 	background: #444;
 }
-.battleStartModal .creature input {
+.modal input {
 	background: #333;
 }
