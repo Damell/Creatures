@@ -5,6 +5,7 @@ angular.module('mean.system')
 .controller('BattleController', ['$scope', 'Global', 'socket', function ($scope, Global, socket) {
     $scope.global = Global;
     console.log( 'Battle started' );
+    console.log( window.user.battleCreatures );
 
     // Game state is contiained in this structure, which is synchronized between devices
     var gameState,
@@ -160,25 +161,12 @@ angular.module('mean.system')
     //  updateArena();
     //});
 
+  // Receive/send data
 	$scope.sendData = function (data) {
 		var dataReady = {room: window.gameConnection.room};
     dataReady.data = data;
     socket.emit('gameConnection', dataReady);
 	};
-
-	socket.on('gameConnection', function (data) {
-		gameState = data.data;
-		updateArena();
-	});
-
-  // Receive/send data
-  $scope.sendData = function (data) {
-    var dataReady = window.gameConnection;
-    if ( dataReady ) {
-      dataReady.data = data;
-      socket.emit('gameConnection', dataReady);
-    }
-  };
 
   socket.on('gameConnection', function (data) {
     mergeState( data );
@@ -209,7 +197,6 @@ angular.module('mean.system')
   console.log( gameState );
   $scope.sendData( gameState );
   init();
-  //updateArena();
 
   var mergeState = function( data ) {
     console.log( 'Merging state' );
