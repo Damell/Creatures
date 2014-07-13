@@ -18,10 +18,10 @@ angular.module('mean.system')
 		data.food = 5;
 		Game.update(data).success(function (data) {
 		});
-    $scope.images=$scope.creatures.map(function(creature) {
-      var name = creature.name;
-      return {src: 'http://robohash.org/'+name, title: name};
-    });
+    //$scope.images=$scope.creatures.map(function(creature) {
+      //var name = creature.name;
+      //return {src: 'http://robohash.org/'+name, title: name};
+    //});
   });
 
   $scope.update = function () {
@@ -33,10 +33,10 @@ angular.module('mean.system')
       $scope.food = data.food;
       $scope.creatures = data.creatures;
 
-      $scope.images=$scope.creatures.map(function(creature) {
-        var name = creature.name;
-        return {src: 'http://robohash.org/'+name, title: name};
-      });
+      //$scope.images=$scope.creatures.map(function(creature) {
+        //var name = creature.name;
+        //return {src: 'http://robohash.org/'+name, title: name};
+      //});
     });
   };
 
@@ -101,6 +101,9 @@ angular.module('mean.system')
     $location.url('/battle');
   };
 
-  //scope.images=[{src:'img1.png',title:'Pic 1'},{src:'img2.jpg',title:'Pic 2'},{src:'img3.jpg',title:'Pic 3'},{src:'img4.png',title:'Pic 4'},{src:'img5.png',title:'Pic 5'}];
+  $scope.images = ['Creature1', 'Creature2', 'Crea4353', '543534tsgsd' ].map(function(creature) {
+      var name = creature;
+      return {src: 'http://robohash.org/'+name, title: name};
+  });
 
 }]);
