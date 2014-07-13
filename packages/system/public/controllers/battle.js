@@ -50,11 +50,13 @@ angular.module('mean.system')
       var dead = function( c ) { return c.health <= 0; };
       if ( _.every( teams[0], dead ) ) {
         console.log( 'You won!' );
+		alert('You won!');
         $location.url( '/creature' );
         $scope.$apply();
       }
       if ( _.every( teams[1], dead ) ) {
         console.log( 'You lost!' );
+		alert('You lost!');
         $location.url( '/creature' );
         $scope.$apply();
       }
@@ -198,7 +200,7 @@ angular.module('mean.system')
     console.log( gameState );
     updateArena();
 	if ( !$scope.connectionReady ) {
-		$scope.sendData(data);
+		$scope.sendData(gameState);
 	}
   });
 
