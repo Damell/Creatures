@@ -201,6 +201,7 @@ angular.module('mean.system')
     updateArena();
 	if ( !$scope.connectionReady ) {
 		$scope.sendData(gameState);
+		$scope.connectionReady = true;
 	}
   });
 
