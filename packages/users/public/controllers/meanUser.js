@@ -115,41 +115,43 @@ angular.module('mean.users')
         }
     ])
   .directive('slider', function () {
-  /*jslint unparam: true*/
-  return {
-    restrict: 'AE',
-	replace: true,
-	scope:{
-		creatures: '='
-	},
-    link: function (scope, elem, attrs) {
+	  /*jslint unparam: true*/
+	  return {
+		  restrict: 'AE',
+		  replace: true,
+		  scope:{
+			  creatures: '='
+		  },
+		  link: function (scope, elem, attrs) {
 
-		scope.currentIndex=0;
+			  scope.currentIndex=0;
 
-		scope.next=function(){
-			if (scope.currentIndex<scope.creatures.length-1){
-        scope.currentIndex++;}
-        else{
-          scope.currentIndex=0;
-        }
-		};
+			  scope.next=function(){
+				  if (scope.currentIndex<scope.creatures.length-1){
+					  scope.currentIndex++;}
+					  else{
+						  scope.currentIndex=0;
+					  }
+			  };
 
-		scope.prev=function(){
-			if (scope.currentIndex>0){
-        scope.currentIndex--;}else{
-          scope.currentIndex=scope.creatures.length-1;
-        }
-		};
+			  scope.prev=function(){
+				  if (scope.currentIndex>0){
+					  scope.currentIndex--;}else{
+						  scope.currentIndex=scope.creatures.length-1;
+					  }
+			  };
 
-		scope.$watch(function(){
-			scope.creatures.forEach(function(creature){
-				creature.visible=false;
-			});
-			scope.creatures[scope.currentIndex].visible=true;
-		});
+			  scope.$watch(function(){
+				  if (scope.creatures) {
+					  scope.creatures.forEach(function(creature){
+						  creature.visible=false;
+					  });
+					  scope.creatures[scope.currentIndex].visible=true;
+				  }
+			  });
 
 
-    },
-	templateUrl:'/users/assets/templates/slider-tmpl.html'
-  };
+		  },
+		  templateUrl:'/users/assets/templates/slider-tmpl.html'
+	  };
 });
